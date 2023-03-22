@@ -1,0 +1,50 @@
+-- Create Airports table
+CREATE TABLE Airports (
+  iata_code VARCHAR(3) PRIMARY KEY,
+  name VARCHAR(255),
+  city VARCHAR(255),
+  country VARCHAR(255)
+);
+
+-- Create Airlines table
+CREATE TABLE Airlines (
+  id INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+
+-- Create Flights table
+CREATE TABLE Flights (
+  id INT PRIMARY KEY,
+  airline_id INT FOREIGN KEY REFERENCES Airlines(id),
+  origin VARCHAR(3) REFERENCES Airports(iata_code),
+  destination VARCHAR(3) REFERENCES Airports(iata_code),
+  departure_time DATETIME,
+  arrival_time DATETIME
+);
+
+-- Sample data for Airports table
+INSERT INTO Airports (iata_code, name, city, country)
+VALUES
+  ('CPH', 'Copenhagen Airport', 'Copenhagen', 'Denmark'),
+  ('LHR', 'Heathrow Airport', 'London', 'United Kingdom'),
+  ('JFK', 'John F. Kennedy International Airport', 'New York', 'United States'),
+  ('CDG', 'Charles de Gaulle Airport', 'Paris', 'France'),
+  ('FRA', 'Frankfurt Airport', 'Frankfurt', 'Germany');
+
+-- Sample data for Airlines table
+INSERT INTO Airlines (id, name)
+VALUES
+  (1, 'SAS'),
+  (2, 'British Airways'),
+  (3, 'American Airlines'),
+  (4, 'Air France'),
+  (5, 'Lufthansa');
+
+-- Sample data for Flights table
+INSERT INTO Flights (id, airline_id, origin, destination, departure_time, arrival_time)
+VALUES
+  (1, 1, 'CPH', 'LHR', '2023-03-25 10:30:00', '2023-03-25 11:45:00'),
+  (2, 2, 'LHR', 'CPH', '2023-03-27 14:15:00', '2023-03-27 17:00:00'),
+  (3, 3, 'JFK', 'CPH', '2023-03-26 19:30:00', '2023-03-27 11:45:00'),
+  (4, 4, 'CDG', 'CPH', '2023-03-24 06:00:00', '2023-03-24 08:45:00'),
+  (5, 5, 'FRA', 'CPH', '2023-03-26 09:00:00', '2023-03-26 11:15:00');
